@@ -95,19 +95,20 @@ def WaPo ():
         print str(e)
         print 'errored in the main try'
         time.sleep(555)
-WaPo()
-def WA_Monthly ():
+def WaPo ():
     try:
-        sourceCode = opener.open('https://washingtonmonthly.com/2018/05/24/why-i-hold-trump-voters-accountable-for-the-mess-were-in/').read()
-        splitSource = re.findall(r'<p>(.*?)</p>',sourceCode)
+        sourceCode = opener.open('https://www.washingtonpost.com/blogs/right-turn/wp/2018/05/30/trump-is-responsible-for-puerto-rico/?utm_term=.dbdd945b87fd').read()
+        splitSource = re.findall(r'<p data-elm-loc=(.*?)</p>',sourceCode)
         for item in splitSource:
-            item = item.replace("&#8220;", '"')
-            item = item.replace("&#8217;", "'")
-            item = item.replace("&#8221;", '"')
+            item = item.replace("&rdquo;", '"')
+            item = item.replace("â€™", "'")
+            item = item.replace("&ldquo;", '"')
+            item = item.replace("&ndash;", '-')
             item = item.replace("â€”", '-')
-            item = item.replace("&#8230;", '...')
-            aTweet = re.sub(r'<.*?>','',item) + "\n"
-            print aTweet
+            item = item.replace("Â",'')
+            aTweet = re.sub(r'.\d+.>','',item)
+            article = re.sub(r'<.*?>','',aTweet) + "\n"
+            print article
 
     except Exception, e:
         print str(e)
