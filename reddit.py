@@ -81,22 +81,6 @@ def TheAtlantic ():
 
 def WaPo ():
     try:
-        sourceCode = opener.open('https://www.washingtonpost.com/news/answer-sheet/wp/2018/05/30/what-and-who-is-fueling-the-movement-to-privatize-public-education-and-why-you-should-care/').read()
-        splitSource = re.findall(r'<p data-elm-loc=(.*?)</p>',sourceCode)
-        for item in splitSource:
-            item = item.replace("&rdquo;", '"')
-            item = item.replace("â€™", "'")
-            item = item.replace("&ldquo;", '"')
-            item = item.replace("&ndash;", '-')
-            aTweet = re.sub(r'<.*?>','',item) + "\n"
-            print aTweet
-
-    except Exception, e:
-        print str(e)
-        print 'errored in the main try'
-        time.sleep(555)
-def WaPo ():
-    try:
         sourceCode = opener.open('https://www.washingtonpost.com/blogs/right-turn/wp/2018/05/30/trump-is-responsible-for-puerto-rico/?utm_term=.dbdd945b87fd').read()
         splitSource = re.findall(r'<p data-elm-loc=(.*?)</p>',sourceCode)
         for item in splitSource:
