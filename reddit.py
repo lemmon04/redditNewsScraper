@@ -7,12 +7,13 @@ import re
 from re import sub
 
 #Fill in client_id & client_secret
-reddit = praw.Reddit(client_id='ix5wCAjGqQrXmQ',
-                     client_secret='XC19Gng-5R3PQf2OorSf29DlnWY',
-                     user_agent='sumac')
+reddit = praw.Reddit(client_id='',
+                     client_secret='',
+                     user_agent='')
 
 #get 10 submissions from hot
 #print url and id number
+i = 1
 subreddit = reddit.subreddit('politics')
 for submission in subreddit.hot(limit=10):
     print submission.url + "\n\n"
@@ -24,18 +25,18 @@ for submission in subreddit.hot(limit=10):
 #for top_level_comment in submission.comments:
  #   print(top_level_comment.body) + "\n"
 
-
 cj = CookieJar()
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 opener.addheaders = [('User-agent', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36')]
 
 def NYT():
     try:
-        sourceCode = opener.open('https://www.nytimes.com/aponline/2018/05/22/us/politics/ap-us-pruitt-epa-the-latest.html').read()
-        splitSource = re.findall(r'<p class="css-1cy1v93 e2kc3sl0">(.*?)</p>',sourceCode)
+        sourceCode = opener.open('https://nytimes.com/2018/05/29/us/politics/trump-sessions-obstruction.html').read()
+        splitSource = re.findall(r'<p class="css-c65vdd e2kc3sl0">(.*?)</p>',sourceCode)
         for item in splitSource:
             item = item.replace("&quot;", '"')
             item = item.replace("&#x27;", "'")
+            item = item.replace("â€™", "'")
             aTweet = re.sub(r'<.*?>','',item) + "\n"
             print aTweet
 
@@ -80,9 +81,8 @@ def TheAtlantic ():
 
 def WaPo ():
     try:
-        sourceCode = opener.open('https://www.washingtonpost.com/news/global-opinions/wp/2018/05/24/surprise-donald-trump-is-terrible-at-diplomacy/?utm_term=.1ed964fe3f80').read()
-        print sourceCode
-        splitSource = re.findall(r'<p>(.*?)</p>',sourceCode)
+        sourceCode = opener.open('https://www.washingtonpost.com/news/answer-sheet/wp/2018/05/30/what-and-who-is-fueling-the-movement-to-privatize-public-education-and-why-you-should-care/').read()
+        splitSource = re.findall(r'<p data-elm-loc=(.*?)</p>',sourceCode)
         for item in splitSource:
             item = item.replace("&rdquo;", '"')
             item = item.replace("â€™", "'")
@@ -95,7 +95,7 @@ def WaPo ():
         print str(e)
         print 'errored in the main try'
         time.sleep(555)
-
+WaPo()
 def WA_Monthly ():
     try:
         sourceCode = opener.open('https://washingtonmonthly.com/2018/05/24/why-i-hold-trump-voters-accountable-for-the-mess-were-in/').read()
@@ -132,6 +132,63 @@ def WSJ ():
         print str(e)
         print 'errored in the main try'
         time.sleep(555)
-WSJ()
+
+def msnbc ():
+    try:
+        sourceCode = opener.open('http://www.msnbc.com/rachel-maddow-show/the-fbi-warning-trump-received-ignored-and-apparently-forgot-about?cid=sm_fb_maddow').read()
+        splitSource = re.findall(r'<p>(.*?)</p>',sourceCode)
+        for item in splitSource:
+            item = item.replace("&#8220;", '"')
+            item = item.replace("&#8217;", "'")
+            item = item.replace("&#8221;", '"')
+            item = item.replace("&#8211;", '-')
+            item = item.replace("&#8230;", '...')
+            aTweet = re.sub(r'<.*?>','',item) + "\n"
+            print aTweet
+    except Exception, e:
+        print str(e)
+        print 'errored in the main try'
+        time.sleep(555)
+
+def LaC ():
+    try:
+        sourceCode = opener.open('https://lawandcrime.com/high-profile/avenatti-unearths-email-to-cohen-that-shows-media-had-the-story-before-the-election/').read()
+        splitSource = re.findall(r'<p>(.*?)</p>',sourceCode)
+        for item in splitSource:
+            item = item.replace("&#8220;", '"')
+            item = item.replace("&#8216;", "'")
+            item = item.replace("&#8217;", "'")
+            item = item.replace("&#8221;", '"')
+            item = item.replace("&mdash;", '-')
+            item = item.replace("&#8230;", '...')
+            aTweet = re.sub(r'<.*?>','',item) + "\n"
+            print aTweet
+    except Exception, e:
+        print str(e)
+        print 'errored in the main try'
+        time.sleep(555)
+
+def  theGuardian():
+    try:
+        sourceCode = opener.open('https://www.theguardian.com/environment/climate-consensus-97-per-cent/2018/may/29/trump-administration-refuses-to-consider-that-97-of-climate-scientists-could-be-right').read()
+        splitSource = re.findall(r'<p>(.*?)</p>',sourceCode)
+        for item in splitSource:
+            item = item.replace("&#8220;", '"')
+            item = item.replace("â€™", "'")
+            item = item.replace("&#8217;", "'")
+            item = item.replace("&#8221;", '"')
+            item = item.replace("&mdash;", '-')
+            item = item.replace("&#8230;", '...')
+            aTweet = re.sub(r'<.*?>','',item) + "\n"
+            print aTweet
+    except Exception, e:
+        print str(e)
+        print 'errored in the main try'
+        time.sleep(555)
+
+
+
+
+
 
 
