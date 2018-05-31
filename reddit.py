@@ -171,6 +171,26 @@ def  theGuardian():
         print 'errored in the main try'
         time.sleep(555)
 
+def CNBC():
+    try:
+        sourceCode = opener.open('https://www.cnbc.com/2018/05/31/trump-will-pardon-conservative-pundit-dinesh-dsouza-who-was-convicted-for.html').read()
+        splitSource = re.findall(r'<p>(.*?)</p>',sourceCode)
+        for item in splitSource:
+            item = item.replace("&#8220;", '"')
+            item = item.replace("â€™", "'")
+            item = item.replace("&#8217;", "'")
+            item = item.replace("&#8221;", '"')
+            item = item.replace("&mdash;", '-')
+            item = item.replace("&#8230;", '...')
+            aTweet = re.sub(r'<.*?>','',item) + "\n"
+            print aTweet
+    except Exception, e:
+        print str(e)
+        print 'errored in the main try'
+        time.sleep(555)
+
+CNBC()
+
 
 
 
